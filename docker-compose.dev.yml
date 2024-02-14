@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  client:
+    image: bloglist-frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+    environment:
+      - BACKEND_URL=http://localhost:8080/api
+  server:
+    image: bloglist-backend-dev
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URL=mongodb://yankee3313:rMdX71svuHiD7TWz@mongo:27017/blogsApp
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes: 
+      - ./backend/mongo_data:/data/db
+  redis: 
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./backend/redis_data:/data
+    command: ['redis-server', '--appendonly', 'yes']
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    depends_on:
+      - client
+      - server
+    restart: always
+volumes:
+  mongo_data:
+  redis_data:

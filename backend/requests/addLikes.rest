@@ -1,0 +1,14 @@
+PUT http://localhost:3003/api/blogs/64338733dd6514a81ff9ef3e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0MzIxZGFhZTY4NDFiMTUzOTczZWY5ZSIsImlhdCI6MTY4MTA5ODM4Nn0.T5YR2_1ZNSoMjSw29AItrngV9m_YrU9qloPsb4FOHao
+
+{
+    "title": "King of Tooting",
+    "author": "Jimbo",
+    "url": "www.farts.com",
+    "likes": 5,
+    "user": {
+    "username": "root",
+    "name": "Superuser"
+  }
+}
